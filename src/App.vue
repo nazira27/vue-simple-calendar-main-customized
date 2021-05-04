@@ -127,8 +127,8 @@ export default defineComponent({
 div#app {
 	font-family: Avenir, Arial, Helvetica, sans-serif;
 	display: flex;
-	height: 87vh;
-	width: 87vw;
+	/* min-height: 87vh; */
+	width: 96vw;
 	margin-left: auto;
 	margin-right: auto;
 }

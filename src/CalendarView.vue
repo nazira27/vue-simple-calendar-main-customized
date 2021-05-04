@@ -21,20 +21,16 @@
 			<div v-if="displayWeekNumbers" class="cv-weeknumber" />
 			<template v-for="(label, index) in weekdayNames">
 				<slot :index="getColumnDOWClass(index)" :label="label" name="dayHeader">
-					<div :key="getColumnDOWClass(index)" :class="getColumnDOWClass(index)" class="cv-header-day">
-						{{ label }}
+					<div :key="getColumnDOWClass(index)" :class="getColumnDOWClass(index)" class="cv-header-day" :style="index === 0 ? 'width: 100px' : 'width: 36px'">
+						{{ index === 0 ? "" : label }}
 					</div>
 				</slot>
 			</template>
 		</div>
 		<div :aria-multiselectable="enableDateSelection" class="cv-weeks">
-			<div
-				v-for="(weekStart, weekIndex) in rooms"
-				:key="`${weekIndex}-week`"
-				:class="['cv-week', 'week' + (weekIndex + 1)]"
-			>
-				<div  class="cv-weeknumber">
-					{{weekStart.name}}
+			<div v-for="(weekStart, weekIndex) in rooms" :key="`${weekIndex}-week`" :class="['cv-week', 'week' + (weekIndex + 1)]">
+				<div class="cv-weeknumber">
+					{{ weekStart.name }}
 				</div>
 				<div class="cv-weekdays">
 					<div
@@ -72,8 +68,8 @@
 						@dragenter.prevent="onDragEnter(day, $event)"
 						@dragleave.prevent="onDragLeave(day, $event)"
 					>
-<!--						<div class="cv-day-number">{{ day.getDate() }}</div>-->
-<!--						<slot :day="day" name="dayContent" />-->
+						<!--						<div class="cv-day-number">{{ day.getDate() }}</div>-->
+						<!--						<slot :day="day" name="dayContent" />-->
 					</div>
 					<template v-for="i in getWeekItems('Sun Apr 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)')">
 						<slot :value="i" weekStartDate="Sun Apr 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)" :top="getItemTop(i)" name="item">
@@ -213,19 +209,44 @@ export default defineComponent({
 			// Returns an array of object representing the date of the beginning of each week
 			// included in the view.
 			const numWeeks = Math.floor((CalendarMath.dayDiff(this.displayFirstDate, this.displayLastDate) + 1) / 7)
-      console.log([...Array(numWeeks)].map((_, i) => CalendarMath.addDays(this.displayFirstDate, i * 7)), 'bbbbb')
+			console.log(
+				[...Array(numWeeks)].map((_, i) => CalendarMath.addDays(this.displayFirstDate, i * 7)),
+				"bbbbb"
+			)
 			return [...Array(numWeeks)].map((_, i) => CalendarMath.addDays(this.displayFirstDate, i * 7))
 		},
-    rooms() {
-		  return [{id:1, name: '110-xona'}, {id:2, name: '111-xona'}, {id:3, name: '112-xona'}]
-    },
+		rooms() {
+			return [
+				{ id: 1, name: "110-xona" },
+				{ id: 2, name: "111-xona" },
+				{ id: 3, name: "112-xona" },
+			]
+		},
 		// Cache the names based on current locale and format settings
 		monthNames(): Array<string> {
 			return CalendarMath.getFormattedMonthNames(this.displayLocale, this.monthNameFormat)
 		},
 		weekdayNames() {
+			let today = new Date()
+			// console.log(today.getDate(), today.getMonth(), "today")
+			let days
+			if (today.getMonth() === 1) {
+				days = 28
+			} else if (
+				today.getMonth() === 0 ||
+				today.getMonth() === 2 ||
+				today.getMonth() === 4 ||
+				today.getMonth() === 6 ||
+				today.getMonth() === 7 ||
+				today.getMonth() === 9 ||
+				today.getMonth() === 11
+			) {
+				days = 31
+			} else {
+				days = 30
+			}
 			let arr = []
-			for (let i = 0; i < 31; i++) {
+			for (let i = 0; i <= days; i++) {
 				arr.push(i)
 			}
 			return arr
@@ -492,7 +513,7 @@ export default defineComponent({
 		getWeekItems(weekStart: Date): Array<ICalendarItem> {
 			// Return a list of items that CONTAIN the week starting on a day.
 			// Sorted so the items that start earlier are always shown first.
-      weekStart = new Date('Sun Apr 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)')
+			weekStart = new Date("Sun Apr 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)")
 			const items = this.findAndSortItemsInWeek(weekStart)
 			const results = []
 			const itemRows: Array<Array<boolean>> = [[], [], [], [], [], [], []]
@@ -591,14 +612,15 @@ header are in the CalendarViewHeader component.
 	flex-shrink: 0;
 	flex-basis: auto;
 	flex-flow: row nowrap;
-	border-width: 0 0 0 1px;
+	border-width: 0 0 1px 1px;
 }
 
 .cv-header-day {
+	/* width: 36px !important; */
 	display: flex;
 	flex-grow: 1;
 	flex-shrink: 0;
-	flex-basis: 0;
+	/* flex-basis: 0; */
 	flex-flow: row nowrap;
 	align-items: center;
 	justify-content: center;
@@ -621,7 +643,7 @@ header are in the CalendarViewHeader component.
 }
 
 .cv-weeknumber {
-	width: 2rem;
+	width: 100px;
 	position: relative;
 	text-align: center;
 	border-width: 1px 1px 0 0;
@@ -664,12 +686,13 @@ header are in the CalendarViewHeader component.
 }
 
 .cv-day {
+	width: 35.89px;
 	display: flex;
 
 	/* Shorthand flex: 1 1 0 not supported by IE11 */
 	flex-grow: 1;
 	flex-shrink: 0;
-	flex-basis: 0;
+	/* flex-basis: 0; */
 	position: relative; /* Fallback for IE11, which doesn't support sticky */
 	position: sticky; /* When week's items are scrolled, keep the day content fixed */
 	top: 0;
