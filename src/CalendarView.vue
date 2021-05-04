@@ -57,6 +57,7 @@
 							},
 							...((dateClasses && dateClasses[CalendarMath.isoYearMonthDay(day)]) || []),
 						]"
+						style="width: 36px"
 						:aria-grabbed="enableDateSelection ? dayIsSelected(day) : 'undefined'"
 						:aria-label="day.getDate()"
 						:aria-selected="dayIsSelected(day)"
@@ -71,8 +72,8 @@
 						<!--						<div class="cv-day-number">{{ day.getDate() }}</div>-->
 						<!--						<slot :day="day" name="dayContent" />-->
 					</div>
-					<template v-for="i in getWeekItems('Sun Apr 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)')">
-						<slot :value="i" weekStartDate="Sun Apr 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)" :top="getItemTop(i)" name="item">
+					<template v-for="i in getWeekItems('Sun March 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)')">
+						<slot :value="i" weekStartDate="Sun March 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)" :top="getItemTop(i)" name="item">
 							<div
 								:key="i.id"
 								:draggable="enableDragDrop"
@@ -227,7 +228,7 @@ export default defineComponent({
 			return CalendarMath.getFormattedMonthNames(this.displayLocale, this.monthNameFormat)
 		},
 		weekdayNames() {
-			let today = new Date()
+			let today = new Date("Sun Apr 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)")
 			// console.log(today.getDate(), today.getMonth(), "today")
 			let days
 			if (today.getMonth() === 1) {
@@ -686,7 +687,7 @@ header are in the CalendarViewHeader component.
 }
 
 .cv-day {
-	width: 35.89px;
+	/* width: 36px; */
 	display: flex;
 
 	/* Shorthand flex: 1 1 0 not supported by IE11 */
