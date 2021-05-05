@@ -29,10 +29,10 @@ export default {
 	},
 
 	daysOfWeek(weekStart: Date): Array<Date> {
-		return [...Array(7)].map((_, i) => this.addDays(weekStart, i))
+		return [...Array(30)].map((_, i) => this.addDays(weekStart, i))
 	},
 	daysOfMonth(): Array<Date> {
-		let weekStart = new Date('Sun Feb 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)')
+		let weekStart = new Date('Sun Apr 1 2021 00:00:00 GMT+0300 (Москва, стандартное время)')
 
 		return [...Array(30)].map((_, i) => this.addDays(weekStart, i))
 	},

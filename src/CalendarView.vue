@@ -247,7 +247,7 @@ export default defineComponent({
 				days = 30
 			}
 			let arr = []
-			for (let i = 0; i <= days; i++) {
+			for (let i = 1; i <= days; i++) {
 				arr.push(i)
 			}
 			return arr

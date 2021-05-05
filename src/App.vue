@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<calendar-view
+		<calendar-view-daily
 			:show-date="showDate"
 			:items="items"
 			:enable-date-selection="true"
@@ -29,13 +29,13 @@
 					@input="setShowDate"
 				/>
 			</template>
-		</calendar-view>
+		</calendar-view-daily>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import CalendarView from "./CalendarView.vue"
+import CalendarViewDaily from "./calendarViewDaily.vue"
 import CalendarViewHeader from "./CalendarViewHeader.vue"
 import { ICalendarItem, INormalizedCalendarItem } from "./ICalendarItem"
 import CalendarMath from "./CalendarMath"
@@ -51,7 +51,7 @@ class AppState {
 export default defineComponent({
 	name: "CalendarDemoApp",
 	components: {
-		CalendarView,
+    CalendarViewDaily,
 		CalendarViewHeader,
 	},
 	data: () => new AppState(),
@@ -127,8 +127,8 @@ export default defineComponent({
 div#app {
 	font-family: Avenir, Arial, Helvetica, sans-serif;
 	display: flex;
-	/* min-height: 87vh; */
-	width: 96vw;
+  min-height: 70vh;
+	width: 94vw;
 	margin-left: auto;
 	margin-right: auto;
 }
