@@ -7,9 +7,9 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/richardtallent/vue-simple-calendar"
+		"url": "https://github.com/nazira27/vue-simple-calendar-main-customized"
 	},
-	"homepage": "https://tallent.us/vue-simple-calendar/",
+	"homepage": "https://github.com/nazira27/vue-simple-calendar-main-customized#readme",
 	"main": "./dist/vue-simple-calendar.umd.js",
 	"module": "./dist/vue-simple-calendar.es.js",
 	"types": "./dist/vue-simple-calendar.d.js",
@@ -25,9 +25,10 @@
 		}
 	},
 	"scripts": {
-		"dev": "vite",
-		"devs": "vite --https",
-		"build": "vite build"
+		"serve": "vue-cli-service serve",
+	    "build": "vue-cli-service build",
+	    "build-bundle": "vue-cli-service build --target lib --name vue-formbase-plugin ./src/components/Form/index.js",
+	    "lint": "vue-cli-service lint"
 	},
 	"dependencies": {
 		"vue": "^3.0.8"
